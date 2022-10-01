@@ -13,6 +13,6 @@ services:
             ipv4_address: "172.20.0.10"
 networks:
     default:
-        name: dockercompose_static
+        name: static
         external: true
 

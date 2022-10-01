@@ -32,3 +32,6 @@ mv docker-compose-linux-x86_64 /usr/bin/docker-compose
 chmod +x /usr/bin/docker-compose
 docker-compose up -d
 
+# 建立docker網路
+docker create network static --subnet 172.20.0.0/24
+

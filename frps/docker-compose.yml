@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+    frps:
+        container_name: frps
+        stdin_open: true
+        tty: true
+        image: myzzzz01/frps
+        network_mode: host
+        restart: always
+        environment:
+            PLATFORM: linux_amd64
+        volumes:
+            - frp:/frp
+volumes:
+    frp:
