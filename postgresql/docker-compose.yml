@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+    psql:
+        image: postgres:14.5-bullseye
+        container_name: psql
+        restart: always
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+            PGDATA: /var/lib/postgresql/data
+        volumes:
+            - psql-data:/var/lib/postgresql/data
+        networks:
+            default:
+                ipv4_address: "172.20.0.18"
+         
+networks:
+    default:
+        name: dockercompose_static
+        external: true
+volumes:
+    psql-data:

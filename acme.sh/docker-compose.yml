@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  acmecf:
+    build: .
+    image: acmecf
+    tty: true
+    stdin_open: true
+    container_name: acmecf
+    restart: always
+    env_file:
+     - .env
+    volumes:
+     - /path/to/cert/acmecf:/acme
+    network_mode: host

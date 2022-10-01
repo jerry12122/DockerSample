@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  code-server:
+    build: .
+    stdin_open: true
+    tty: true
+    image: code-server
+    container_name: code-server
+    volumes:
+      - /path/to/code:/app/path
+      - /volumes/code/config:/root
+    networks:
+      default:
+        ipv4_address: "172.20.0.12"
+    restart: always
+networks:
+  default:
+    name: dockercompose_static
+    external: true
+

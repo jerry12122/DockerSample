@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  nginx:
+    stdin_open: true
+    tty: true
+    image: nginx
+    container_name: nginx
+    restart: always
+    networks:
+      default:
+        ipv4_address: "172.20.0.6"
+    volumes: 
+     - /volumes/nginx/config:/etc/nginx
+     - /volumes/nginx/html:/usr/share/nginx/html
+networks:
+  default:
+    name: dockercompose_static
+    external: true
+

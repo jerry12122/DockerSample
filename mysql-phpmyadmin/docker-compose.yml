@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+    volumes:
+     - /volumes/mariadb:/var/lib/mariadb
+    networks:
+      default:
+        ipv4_address: "172.20.0.2"
+    
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+     - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    networks:
+      default:
+        ipv4_address: "172.20.0.3"
+networks:
+  default:
+    name: dockercompose_static
+    external: true

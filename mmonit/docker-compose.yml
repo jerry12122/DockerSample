@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+    mmonit:
+        build: .
+        stdin_open: true
+        tty: true
+        image: mmonit
+        container_name: mmonit
+        volumes:
+          - /volumes/mmonit/db:/app/mmonit/db
+        networks:
+            default:
+                ipv4_address: "172.20.0.9"
+networks:
+  default:
+    name: dockercompose_static
+    external: true

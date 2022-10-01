@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  ddns-go:
+    build: .
+    stdin_open: true
+    tty: true
+    image: ddns-go
+    container_name: ddns-go
+    volumes:
+      - /volumes/ddns-go/config:/root
+    networks:
+        default:
+            ipv4_address: "172.20.0.10"
+networks:
+    default:
+        name: dockercompose_static
+        external: true
+
