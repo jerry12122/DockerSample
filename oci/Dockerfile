@@ -12,14 +12,14 @@ RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 WORKDIR /tmp
 RUN useradd -u 1000 aaa && \
-    echo "aaa    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+    echo "aaa    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers.d/aaa
 USER aaa
 RUN git clone https://github.com/hitrov/oci-arm-host-capacity.git && sudo mv oci-arm-host-capacity/ /oci && sudo chmod 777 /oci
 WORKDIR /oci
 RUN composer install --ignore-platform-reqs
 USER root
 RUN userdel aaa
-RUN sed -i 's/aaa    ALL=(ALL:ALL) NOPASSWD:ALL//g' /etc/sudoers
+RUN rm -rf /etc/sudoers.d/aaa
 WORKDIR /entry
 COPY ./entry.sh /entry/
 RUN chmod +x entry.sh
