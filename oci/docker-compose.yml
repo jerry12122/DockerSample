@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  oci:
+    build: .
+    stdin_open: true
+    tty: true
+    image: oci
+    container_name: oci
+    volumes:
+      - /volumes/oci:/app
+    networks:
+      default:
+        ipv4_address: "172.20.0.19"
+networks:
+  default:
+    name: static
+    external: true
+
+
