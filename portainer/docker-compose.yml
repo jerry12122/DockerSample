@@ -1,6 +1,7 @@
 version: "3.9"
 services:
     portainer:
+        container_name: portainer
         image: portainer/portainer
         ports:
             - 9000:9000
