@@ -1,14 +1,15 @@
 version: "3.9"
 services:
-  acmecf:
+  acme-sh:
     build: .
-    image: acmecf
+    image: acme-sh
     tty: true
     stdin_open: true
-    container_name: acmecf
+    container_name: acme-sh
     restart: always
     env_file:
      - .env
     volumes:
-     - /path/to/cert/acmecf:/acme
+     - /volumes/acme/cert:/cert
+     - /volumes/acme/home:/root/.acme.sh
     network_mode: host

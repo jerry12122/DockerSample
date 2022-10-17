@@ -1,17 +1,25 @@
 #!/bin/bash
-curl -sSL https://get.acme.sh | sh -s email=$ACME_EMAIL
-ln -s /root/.acme.sh/acme.sh /usr/bin/acme.sh
-acme.sh --set-default-ca --server letsencrypt
-crontab -r 
-crontab -l > mycron
-IFS=';'
-read -ra arr <<< "$DOMAIN"
-for val in "${arr[@]}";
-do
-  echo "0 0 * * * acme.sh  --home /acme --server letsencrypt --issue  --dns dns_cf  $val --force >> /log/acme.log" >> mycron
-done
-crontab mycron
-rm mycron
-mkdir -p /log
-touch /log/acme.log
-tail -f /log/acme.log
+
+# install acme.sh
+if  [[ ! -f /root/.acme.sh/acme.sh ]]
+then
+  curl -sSL https://get.acme.sh  | sh -s email=$ACME_EMAIL
+fi
+if  [[ ! -f /usr/bin/acme.sh ]]
+then
+  ln -s /root/.acme.sh/acme.sh /usr/bin/acme.sh
+  echo [$(date)]  acme.sh has been installed
+  acme.sh --set-default-ca --server zerossl
+fi
+
+# install set notify
+acme.sh --set-notify --notify-level 3
+acme.sh --set-notify --notify-mode 0
+acme.sh --set-notify --notify-hook telegram
+service cron start
+
+# logging
+if [[ ! -f /root/.acme.sh/acme.sh.log ]]; then
+  touch /root/.acme.sh/acme.sh.log
+fi
+tail -f /root/.acme.sh/acme.sh.log
